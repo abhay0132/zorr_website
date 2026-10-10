@@ -10,6 +10,8 @@ import Personas from "@/components/Personas";
 import Faq from "@/components/Faq";
 import FinalCta from "@/components/FinalCta";
 import Footer from "@/components/Footer";
+import DeletedNotice from "@/components/DeletedNotice";
+import { Suspense } from "react";
 
 export default function HomePage() {
   return (
@@ -17,6 +19,9 @@ export default function HomePage() {
     // without turning this wrapper into a scroll container, so the sticky nav still sticks.
     <div className="overflow-x-clip">
       <Nav />
+      <Suspense>
+        <DeletedNotice />
+      </Suspense>
       <main>
         <Hero />
         <SpecStrip />

@@ -54,7 +54,7 @@ export default function HowItWorks() {
           <div className="border-t border-line-soft pt-2.5 text-xs text-accent">Back-friendly picks applied</div>
         </Step>
 
-        <Step when="Day 1 onward" title="Train, tick, repeat" caption="Mark each workout done and tell us how it felt. That's how the next plan gets better.">
+        <Step when="Day 1 onward" title="Train, tick, repeat" caption="Mark each workout done and tell us how it felt. Two weeks, ticked off one day at a time.">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-3">
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-on-accent">

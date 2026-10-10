@@ -6,9 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": [
         "run",
-        "dev"
+        "dev",
+        "--",
+        "-p",
+        "3002"
       ],
-      "port": 3000
+      "port": 3002
     },
     {
       "name": "zorr-web-prod",
@@ -21,6 +24,15 @@
         "3001"
       ],
       "port": 3001
+    },
+    {
+      "name": "zorr-api",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": [
+        "-c",
+        "cd /Users/abhay0005/Documents/Zorr/Zorr_Final/zorr-backend && ALLOWED_ORIGINS=http://localhost:3002 SENDGRID_API_KEY=SG.local-web-testing-disabled npm run dev"
+      ],
+      "port": 3000
     }
   ]
 }

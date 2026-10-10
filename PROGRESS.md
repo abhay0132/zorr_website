@@ -142,3 +142,18 @@ API the web will use in Phase 4: `POST /api/auth/signup` (+ `turnstileToken`),
 `POST /api/workouts/generate` (200/201 plan, 202 queued, 403 acknowledgement, 429 limit),
 `GET /api/workouts/fortnight`, `POST /api/workouts/:id/complete`, `POST /api/workouts/:id/feel`,
 `POST /api/workouts/plans/:id/feedback`.
+
+---
+
+## 2026-10-10 — Phase 4: the web app
+
+Built `/signup`, `/login`, `/forgot-password`, `/onboarding`, `/plan`, `/account` (all
+mobile first, dark tokens, noindex where private) on `lib/api.ts` (cookie session, one
+shared refresh on 401) and `lib/onboarding.ts` (the app's questions and mapping, plus the
+phone question). Full walkthrough at 375×812 against the local backend, signup to
+deletion, passed; it found two backend bugs (ramp clock lagging the start date; repeated
+start date rotating the week), both fixed in `Zorr_Final`. Landing "How it works" caption
+no longer claims ratings improve the next plan.
+
+Master record (file by file, walkthrough steps): `Zorr_Final/docs/web/CHANGELOG.md` →
+Phase 4. Local run: `.claude/launch.json` → `zorr-api` (port 3000) + `zorr-web` (3002).

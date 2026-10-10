@@ -20,4 +20,9 @@ Open blockers and risks. Dated.
   our own CSS). Clears when Next bumps it.
 - 2026-10-10 — Legal drafts have open placeholders (lib/legal.ts) and need a lawyer.
   Gemini paid-tier status must be confirmed or the AI paragraph in /privacy is false.
-- 2026-10-10 — /privacy and /support link to /account, which 404s until Phase 4.
+- ~~/account 404~~ Built 2026-10-10.
+- 2026-10-10 — Onboarding consent names "Google's Gemini" in-app (Apple 5.1.2(i) clarity);
+  the copy rules ban vendor names in marketing copy. Founder to confirm.
+- 2026-10-10 — Hero still says "iPhone app in review" (not submitted yet).
+- 2026-10-10 — Password-reset / email-verify pages are backend-served, old cream style.
+- 2026-10-10 — Turnstile only tested with Cloudflare's always-pass test key.
