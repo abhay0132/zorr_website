@@ -240,7 +240,7 @@ const sections: LegalSection[] = [
         </p>
         <h3>Sent to generate your plan</h3>
         <ul>
-          <li>Your first name, age and weight.</li>
+          <li>Your age and weight.</li>
           <li>Your goal and training experience.</li>
           <li>Your equipment, days per week and session length.</li>
           <li>How active your day is, sleep, stress, diet, and allergies.</li>
@@ -254,7 +254,7 @@ const sections: LegalSection[] = [
         </ul>
         <h3>Never sent</h3>
         <ul>
-          <li>Your email address, password, phone platform, sex, height, photos or IP address.</li>
+          <li>Your name, email address, password, phone platform, sex, height, photos or IP address.</li>
         </ul>
         <h3>What Google may do with it</h3>
         <p>

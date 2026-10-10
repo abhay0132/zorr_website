@@ -124,3 +124,21 @@ Not run: Lighthouse.
   outer limit, main obligations from May 2027).
 - Verified on a production build at 1440 and 375: no overflow, no console errors besides
   the expected prefetch 404 of `/account` (Phase 4).
+
+---
+
+## 2026-10-10 — Phase 3 (backend) done in `Zorr_Final`
+
+Backend work lives in the monorepo (branch `feature/web-backend`). The master record of all
+phases, file by file, is `Zorr_Final/docs/web/CHANGELOG.md`; the Phase 3 report is
+`Zorr_Final/zorr-build-spec/reports/web-phase3-report.md`.
+
+Website change in this phase: `/privacy` no longer says the user's first name is sent to
+the AI (the backend stopped sending it); it is now listed under "never sent".
+
+API the web will use in Phase 4: `POST /api/auth/signup` (+ `turnstileToken`),
+`POST /api/user/acknowledgements`, `PUT /api/user/profile` (+ `phonePlatform`),
+`PATCH /api/workouts/plans/current/start-date` (send local midnight),
+`POST /api/workouts/generate` (200/201 plan, 202 queued, 403 acknowledgement, 429 limit),
+`GET /api/workouts/fortnight`, `POST /api/workouts/:id/complete`, `POST /api/workouts/:id/feel`,
+`POST /api/workouts/plans/:id/feedback`.
