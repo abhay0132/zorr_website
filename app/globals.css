@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    background-color: theme("colors.bg");
+  }
+
+  body {
+    background-color: theme("colors.bg");
+    color: theme("colors.fg");
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: theme("colors.accent");
+    color: theme("colors.on-accent");
+  }
+
+  /* Visible focus for keyboard users everywhere. */
+  :focus-visible {
+    outline: 2px solid theme("colors.accent");
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Sticky nav must not hide the heading an in-page link jumps to. */
+  [id] {
+    scroll-margin-top: 80px;
+  }
+}
+
+@layer components {
+  /* Condensed uppercase headline. font-stretch needs the variable Archivo wdth axis. */
+  .headline {
+    @apply font-display font-heavy uppercase;
+    font-stretch: 72%;
+  }
+
+  /* Section and card label in mono caps. */
+  .label {
+    @apply font-mono text-xs uppercase tracking-label;
+  }
+
+  /* Primary CTA: accent fill, 10 to 12px radius, never a pill. */
+  .btn-accent {
+    @apply inline-flex items-center justify-center gap-2.5 rounded-xl bg-accent font-semibold text-on-accent transition-[filter] hover:brightness-110;
+  }
+
+  .link {
+    @apply text-soft transition-colors hover:text-white;
+  }
+
+  /* Interim styles for the legal and support pages until Phase 2 rewrites them. */
+  .eyebrow {
+    @apply label text-muted;
+  }
+  .prose-zorr {
+    @apply text-muted;
+  }
+  .prose-zorr h2 {
+    @apply mt-12 font-display text-2xl font-bold text-fg;
+  }
+  .prose-zorr h3 {
+    @apply mt-8 font-display text-lg font-bold text-fg;
+  }
+  .prose-zorr p {
+    @apply mt-4 leading-relaxed;
+  }
+  .prose-zorr ul {
+    @apply mt-4 list-disc space-y-2 pl-5 leading-relaxed;
+  }
+  .prose-zorr a {
+    @apply text-accent underline decoration-accent/40 underline-offset-2 hover:decoration-accent;
+  }
+}
+
+/* The ticker and every transition stop for people who ask for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 0.001ms !important;
+  }
+}
