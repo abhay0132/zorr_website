@@ -55,27 +55,41 @@
     @apply text-soft transition-colors hover:text-white;
   }
 
-  /* Interim styles for the legal and support pages until Phase 2 rewrites them. */
-  .eyebrow {
-    @apply label text-muted;
+  /* Long-form text on Terms, Privacy and Support: 17px, generous leading, ~68ch lines,
+     body in the softer off-white (12:1 on the background) rather than the muted grey. */
+  .legal {
+    @apply text-[17px] leading-[1.7] text-soft;
   }
-  .prose-zorr {
-    @apply text-muted;
+  .legal p,
+  .legal ul,
+  .legal ol,
+  .legal dl {
+    @apply mt-5;
   }
-  .prose-zorr h2 {
-    @apply mt-12 font-display text-2xl font-bold text-fg;
+  .legal h3 {
+    @apply mt-9 text-lg font-semibold tracking-[-0.01em] text-fg;
   }
-  .prose-zorr h3 {
-    @apply mt-8 font-display text-lg font-bold text-fg;
+  .legal ul {
+    @apply list-none pl-0;
   }
-  .prose-zorr p {
-    @apply mt-4 leading-relaxed;
+  .legal ul > li {
+    @apply relative mt-2 pl-6;
   }
-  .prose-zorr ul {
-    @apply mt-4 list-disc space-y-2 pl-5 leading-relaxed;
+  .legal ul > li::before {
+    content: "";
+    @apply absolute left-0 top-[0.72em] h-1.5 w-1.5 rounded-[2px] bg-accent;
   }
-  .prose-zorr a {
-    @apply text-accent underline decoration-accent/40 underline-offset-2 hover:decoration-accent;
+  .legal ol {
+    @apply list-decimal pl-6 marker:font-mono marker:text-sm marker:text-accent;
+  }
+  .legal ol > li {
+    @apply mt-2 pl-1;
+  }
+  .legal strong {
+    @apply font-semibold text-fg;
+  }
+  .legal a {
+    @apply text-fg underline decoration-accent decoration-1 underline-offset-[3px] transition-colors hover:text-accent;
   }
 }
 

@@ -15,5 +15,6 @@ Open blockers and risks. Dated.
   default (zorr.app@gmail.com).
 - 2026-10-10 — `next` pins `postcss@8.4.31` internally (high advisory, build-time only,
   our own CSS). Clears when Next bumps it.
-- 2026-10-10 — Legal/support pages still carry old copy (em dashes, "Effective August 1").
-- 2026-10-10 — Repo has no commits yet.
+- 2026-10-10 — Legal drafts have open placeholders (lib/legal.ts) and need a lawyer.
+  Gemini paid-tier status must be confirmed or the AI paragraph in /privacy is false.
+- 2026-10-10 — /privacy and /support link to /account, which 404s until Phase 4.
