@@ -1,4 +1,4 @@
-import { Check } from "./icons";
+import { Check } from "@/components/site/icons";
 
 function Step({ when, title, children, caption }: { when: string; title: string; children: React.ReactNode; caption: string }) {
   return (

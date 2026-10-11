@@ -1,7 +1,7 @@
 import Link from "next/link";
-import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
-import { ArrowRight } from "@/components/icons";
+import Nav from "@/components/site/Nav";
+import Footer from "@/components/site/Footer";
+import { ArrowRight } from "@/components/site/icons";
 
 export const metadata = { title: "Page not found" };
 

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Check } from "./icons";
+import { ArrowRight, Check } from "@/components/site/icons";
 import { SIGNUP_PATH } from "@/lib/site";
 
 const DAY = [

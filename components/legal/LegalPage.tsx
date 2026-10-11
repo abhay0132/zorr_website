@@ -1,5 +1,5 @@
-import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
+import Nav from "@/components/site/Nav";
+import Footer from "@/components/site/Footer";
 
 export type LegalSection = { id: string; title: string; content: React.ReactNode };
 

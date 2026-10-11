@@ -1,5 +1,5 @@
 import EquipmentDemo from "./EquipmentDemo";
-import VideoSlot from "./VideoSlot";
+import VideoSlot from "@/components/site/VideoSlot";
 
 const CELL_BASE = "flex border-b border-r border-line p-6 sm:p-8";
 const CELL = `${CELL_BASE} flex-col gap-7`;

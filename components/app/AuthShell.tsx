@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Logo from "@/components/Logo";
+import Logo from "@/components/site/Logo";
 
 // Frame for sign-up, sign-in and password pages: just the wordmark and a narrow column.
 export default function AuthShell({ title, intro, children }: { title: React.ReactNode; intro?: React.ReactNode; children: React.ReactNode }) {

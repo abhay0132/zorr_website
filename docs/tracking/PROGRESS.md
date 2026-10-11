@@ -75,7 +75,7 @@ shared `.next` cache (MODULE_NOT_FOUND). If that happens, stop the dev server,
 
 ## 2026-10-10 — Phase 0 recon + Phase 1: new dark landing page
 
-**Phase 0** (read-only against `Zorr_Final`): see `docs/web/phase0-recon.md`. Backend
+**Phase 0** (read-only against `Zorr_Final`): see `docs/phases/phase0-recon.md`. Backend
 baseline 373/373 tests passing. Recommendation: Next.js for all web pages, API on
 `api.zorr.app` with the existing httpOnly cookies. Expo web was tried in a scratch copy:
 it bundles, but auth breaks (`expo-secure-store` has no web build).
@@ -84,7 +84,7 @@ it bundles, but auth breaks (`expo-secure-store` has no web build).
 the Supabase/Upstash waitlist were moved to `../Zorr_Website_old_design/` (plus a tarball
 `../Zorr_Website_old_design_backup_2026-10-10.tar.gz`). Nothing was deleted.
 
-**Phase 1 built** from `docs/web/zorr-landing-reference.html`:
+**Phase 1 built** from `docs/design/zorr-landing-reference.html`:
 - Tokens in `tailwind.config.ts`; Archivo (variable, wdth axis, `font-stretch: 72%`),
   Geist and Geist Mono via `next/font/google`.
 - Components: Nav, Hero, SpecStrip, TemplateVsPlan, Ticker, FeatureBento (+ EquipmentDemo,
@@ -157,3 +157,13 @@ no longer claims ratings improve the next plan.
 
 Master record (file by file, walkthrough steps): `Zorr_Final/docs/web/CHANGELOG.md` →
 Phase 4. Local run: `.claude/launch.json` → `zorr-api` (port 3000) + `zorr-web` (3002).
+
+---
+
+## 2026-10-11 — Restructured and pushed to GitHub
+
+Folders reorganised with no URL change: route groups `app/(marketing|auth|app)`,
+`components/{site,landing,legal,app}`, `docs/{brief,design,phases,tracking}`. `.claude/`
+untracked (machine-specific), `lint` script replaced by `typecheck`, README rewritten with a
+folder map, `docs/README.md` added. Same 17 static routes after the move. Pushed to
+https://github.com/abhay0132/zorr_website (`main`).

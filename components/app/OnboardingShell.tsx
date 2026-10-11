@@ -1,4 +1,4 @@
-import Logo from "@/components/Logo";
+import Logo from "@/components/site/Logo";
 
 // Onboarding gets the wordmark only: no nav to wander off through mid-answers.
 export default function OnboardingShell({ children }: { children: React.ReactNode }) {

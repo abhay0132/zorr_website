@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight } from "./icons";
+import { ArrowRight } from "@/components/site/icons";
 import { SIGNUP_PATH } from "@/lib/site";
 
 export default function FinalCta() {

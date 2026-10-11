@@ -5,8 +5,8 @@ import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { api, errorText } from "@/lib/api";
 import { localMidnightISO } from "@/lib/onboarding";
-import VideoSlot from "@/components/VideoSlot";
-import { Check } from "@/components/icons";
+import VideoSlot from "@/components/site/VideoSlot";
+import { Check } from "@/components/site/icons";
 import { useSession } from "./useSession";
 import { Button, Notice, Spinner } from "./ui";
 
