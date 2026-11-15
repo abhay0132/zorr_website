@@ -67,7 +67,7 @@ export default function SignupForm() {
       <fieldset className="flex flex-col gap-3">
         <legend className="sr-only">Agreements</legend>
         <label className="flex cursor-pointer items-start gap-3 text-[15px] leading-[1.5] text-soft">
-          <input type="checkbox" checked={acceptedTerms} onChange={(e) => setAcceptedTerms(e.target.checked)} className="mt-1 h-5 w-5 shrink-0 accent-[#FF5C1F]" />
+          <input type="checkbox" checked={acceptedTerms} onChange={(e) => setAcceptedTerms(e.target.checked)} className="mt-1 h-5 w-5 shrink-0 accent-[#EDEBE6]" />
           <span>
             I agree to the{" "}
             <Link href="/terms" target="_blank" className="text-fg underline decoration-accent underline-offset-2">Terms</Link> and the{" "}
@@ -75,7 +75,7 @@ export default function SignupForm() {
           </span>
         </label>
         <label className="flex cursor-pointer items-start gap-3 text-[15px] leading-[1.5] text-soft">
-          <input type="checkbox" checked={isAdult} onChange={(e) => setIsAdult(e.target.checked)} className="mt-1 h-5 w-5 shrink-0 accent-[#FF5C1F]" />
+          <input type="checkbox" checked={isAdult} onChange={(e) => setIsAdult(e.target.checked)} className="mt-1 h-5 w-5 shrink-0 accent-[#EDEBE6]" />
           <span>I am 18 or older.</span>
         </label>
       </fieldset>

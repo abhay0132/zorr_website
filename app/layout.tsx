@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Geist, Geist_Mono } from "next/font/google";
+import { Archivo, Geist_Mono } from "next/font/google";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
-// Archivo is loaded as a variable font WITH the width axis: the condensed
-// headlines are font-stretch: 72%, which needs wdth, not a separate family.
+// The app's type: one family at two widths plus a mono. Archivo is loaded as a
+// variable font WITH the width axis, so headlines can run expanded (125%) and big
+// numbers condensed (75%) without separate families. It is also the body face.
 const archivo = Archivo({
   subsets: ["latin"],
   axes: ["wdth"],
@@ -12,15 +13,9 @@ const archivo = Archivo({
   display: "swap",
 });
 
-const geist = Geist({
-  subsets: ["latin"],
-  variable: "--font-geist",
-  display: "swap",
-});
-
 const geistMono = Geist_Mono({
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600"],
   variable: "--font-geist-mono",
   display: "swap",
 });
@@ -49,7 +44,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0C0B0A",
+  themeColor: "#0F1011",
   colorScheme: "dark",
   width: "device-width",
   initialScale: 1,
@@ -61,7 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     // <html>/<body> before hydration. Root elements only; page content is unaffected.
     <html
       lang="en"
-      className={`${archivo.variable} ${geist.variable} ${geistMono.variable}`}
+      className={`${archivo.variable} ${geistMono.variable}`}
       suppressHydrationWarning
     >
       <body className="font-sans" suppressHydrationWarning>

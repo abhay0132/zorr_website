@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { api, errorText } from "@/lib/api";
 import { localMidnightISO } from "@/lib/onboarding";
 import VideoSlot from "@/components/site/VideoSlot";
+import { KnobLink } from "@/components/site/Knob";
 import { Check } from "@/components/site/icons";
 import { useSession } from "./useSession";
 import { Button, Notice, Spinner } from "./ui";
@@ -27,6 +28,18 @@ type Fortnight = {
 
 /** Plan web allowance (backend WEB_PLAN_GENERATION_LIMIT). Only used to word the rebuild link. */
 const WEB_PLAN_LIMIT = 2;
+
+/**
+ * Competition plate colours, as in the iPhone app: a session's colour is its
+ * position among the week's sessions, so the same session keeps its colour in
+ * both weeks and the grid reads as a code. Plate colours mean session types only.
+ */
+const PLATES = ["#D8443A", "#3B7AD6", "#E8B43B", "#3EA673", "#CFCDC7", "#6E7075"];
+function plateFor(data: Fortnight, day: Day): string {
+  const week = data.weeks.find((w) => w.weekNumber === day.weekNumber);
+  const i = week ? week.days.findIndex((d) => d.workoutId === day.workoutId) : -1;
+  return i >= 0 ? PLATES[i % PLATES.length] : PLATES[PLATES.length - 1];
+}
 
 const ymd = (iso: string) => iso.slice(0, 10);
 function addDays(day: string, n: number): string {
@@ -94,14 +107,14 @@ export default function PlanView() {
     const waiting = profile.planGenerationCount > 0;
     return (
       <div className="pt-4">
-        <h1 className="headline text-[clamp(36px,10vw,52px)] leading-[0.95]">
+        <h1 className="headline text-[clamp(26px,7.4vw,36px)] leading-[1.02]">
           {waiting ? <>Your plan is <span className="text-accent">on its way</span></> : <>No plan <span className="text-accent">yet</span></>}
         </h1>
         <p className="mt-4 text-[16px] leading-[1.6] text-muted">
           {waiting ? "We're at capacity today. We'll email you as soon as your plan is ready." : "Answer a few questions and your first two weeks are ready in about a minute."}
         </p>
         {!waiting && (
-          <Link href="/onboarding" className="btn-accent mt-6 min-h-[52px] px-6 hover:text-on-accent">Build my plan</Link>
+          <KnobLink href="/onboarding" size="md" className="mt-6">Build my plan</KnobLink>
         )}
         <ComingToIphone />
       </div>
@@ -118,8 +131,8 @@ export default function PlanView() {
         <div className="mb-6"><Notice tone="info">Your first two weeks are ready. Start with the day marked today, or the next one up.</Notice></div>
       )}
 
-      <p className="label text-accent">Your two weeks</p>
-      <h1 className="headline mt-2 text-[clamp(34px,9vw,52px)] leading-[0.95]">{data.plan.name}</h1>
+      <p className="label text-dim">Your two weeks</p>
+      <h1 className="headline mt-2 text-[clamp(24px,7vw,34px)] leading-[1.02]">{data.plan.name}</h1>
       <p className="mt-3 text-[15px] text-muted">
         {data.progress?.done ?? 0} of {data.progress?.total ?? 0} workouts done. Miss a day and the plan simply carries on.
       </p>
@@ -148,6 +161,7 @@ export default function PlanView() {
             today={ymd(data.today)}
             currentWeek={data.currentWeek ?? 1}
             defaultOpen={day === nextUp}
+            plate={plateFor(data, day)}
             onChange={(patch) => patchDay(day.workoutId, day.weekNumber, patch)}
           />
         ))}
@@ -168,7 +182,7 @@ export default function PlanView() {
   );
 }
 
-/** 14 squares from the plan's first day: done, today, workout ahead, rest. */
+/** 14 discs from the plan's first day: done (solid plate colour), today (orange ring), workout ahead (plate ring), rest. */
 function FortnightGrid({ data }: { data: Fortnight }) {
   const days = data.weeks.flatMap((w) => w.days);
   const start = ymd(data.weeks[0]?.days[0]?.date ?? data.today);
@@ -181,23 +195,35 @@ function FortnightGrid({ data }: { data: Fortnight }) {
   });
   const label = `Two-week grid: ${data.progress?.done ?? 0} of ${data.progress?.total ?? 0} workouts done`;
   return (
-    <div role="img" aria-label={label} className="mt-6 grid grid-cols-7 gap-1.5">
+    <div role="img" aria-label={label} className="mt-6 grid grid-cols-7 gap-2 sm:gap-3">
       {cells.map(({ date, day }) => {
         const isToday = date === today;
-        const cls = day?.done
-          ? "bg-accent"
-          : isToday
-            ? "border-[1.5px] border-fg"
-            : day && date > today
-              ? "border border-dashed border-control-3"
-              : "bg-cell";
-        return <span key={date} className={`aspect-square rounded-lg ${cls}`} />;
+        const plate = day ? plateFor(data, day) : null;
+        let style: React.CSSProperties | undefined;
+        let cls = "bg-cell";
+        if (day && plate) {
+          if (day.done) {
+            cls = "";
+            style = { background: `radial-gradient(circle, #0F1011 0 20%, ${plate} 21% 100%)` };
+          } else if (isToday) {
+            cls = "border-2 border-now";
+            style = { background: `radial-gradient(circle, #0F1011 0 20%, ${plate}55 21% 100%)` };
+          } else if (date > today) {
+            cls = "";
+            style = { boxShadow: `inset 0 0 0 2px ${plate}99` };
+          } else {
+            cls = "border-2 border-line-strong";
+          }
+        } else if (isToday) {
+          cls = "border-2 border-now bg-cell";
+        }
+        return <span key={date} className={`aspect-square rounded-full ${cls}`} style={style} />;
       })}
     </div>
   );
 }
 
-function DayCard({ day, today, currentWeek, defaultOpen, onChange }: { day: Day; today: string; currentWeek: number; defaultOpen: boolean; onChange: (p: Partial<Day>) => void }) {
+function DayCard({ day, today, currentWeek, defaultOpen, plate, onChange }: { day: Day; today: string; currentWeek: number; defaultOpen: boolean; plate: string; onChange: (p: Partial<Day>) => void }) {
   const [open, setOpen] = useState(defaultOpen);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -234,15 +260,19 @@ function DayCard({ day, today, currentWeek, defaultOpen, onChange }: { day: Day;
   }
 
   return (
-    <article className={`rounded-2xl border ${isToday ? "border-control-3" : "border-line"} bg-surface`}>
+    <article className={`rounded-[20px] border ${isToday ? "border-now/60" : "border-line"} bg-surface`}>
       <h2 className="m-0">
         <button type="button" aria-expanded={open} aria-controls={panelId} aria-label={`${day.name}, ${formatDay(date)}, ${status}`} onClick={() => setOpen(!open)} className="flex w-full items-center justify-between gap-4 p-4 text-left">
           <span className="flex items-center gap-3">
-            <span aria-hidden="true" className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] ${day.done ? "bg-accent text-on-accent" : "border border-control text-muted"}`}>
-              {day.done ? <Check /> : <span className="font-mono text-[11px]">{day.exercises.length}</span>}
+            <span
+              aria-hidden="true"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-ink"
+              style={day.done ? { background: plate } : { boxShadow: `inset 0 0 0 2.5px ${plate}` }}
+            >
+              {day.done ? <Check /> : <span className="font-mono text-[11px] text-muted">{day.exercises.length}</span>}
             </span>
             <span>
-              <span className="block font-mono text-[11px] uppercase tracking-label-tight text-muted">
+              <span className={`block font-mono text-[11px] uppercase tracking-label-tight ${isToday && !day.done ? "text-now" : "text-muted"}`}>
                 {formatDay(date)} · {status}
               </span>
               <span className="mt-0.5 block font-display text-[22px] font-extrabold uppercase leading-tight" style={{ fontStretch: "75%" }}>{day.name}</span>
@@ -263,7 +293,7 @@ function DayCard({ day, today, currentWeek, defaultOpen, onChange }: { day: Day;
 
         {canMark && (
           <div className="mt-4">
-            <Button full loading={busy} onClick={markDone}>Mark day done</Button>
+            <Button full loading={busy} onClick={markDone} icon={<Check size={15} />}>Mark day done</Button>
           </div>
         )}
 
@@ -303,14 +333,14 @@ function ExerciseRow({ ex }: { ex: Exercise }) {
             {p.perSide ? " · each side" : ""} · rest {ex.restSeconds}s
           </p>
         </div>
-        <p className="whitespace-nowrap font-mono text-[15px] text-accent">{p.display}</p>
+        <p className="whitespace-nowrap font-mono text-[15px] font-semibold text-fg">{p.display}</p>
       </div>
       {ex.videoUrl && <VideoSlot title={ex.name} videoUrl={ex.videoUrl} className="mt-3" />}
       {ex.cues.length > 0 && (
         <ol className="mt-3 flex flex-col gap-1.5">
           {ex.cues.slice(0, 3).map((cue, i) => (
             <li key={i} className="flex gap-2.5 text-[14px] leading-[1.5] text-soft">
-              <span aria-hidden="true" className="font-mono text-accent">{String(i + 1).padStart(2, "0")}</span>
+              <span aria-hidden="true" className="font-mono text-dim">{String(i + 1).padStart(2, "0")}</span>
               {/* The library splits cues on ";", so all but the first start lower-case. */}
               {cue.charAt(0).toUpperCase() + cue.slice(1)}
             </li>
@@ -367,10 +397,10 @@ function PlanFeedback({ planId }: { planId: string }) {
 /** Future tense only: none of this is on the web. */
 export function ComingToIphone() {
   return (
-    <section aria-labelledby="iphone-h" className="mt-10 rounded-2xl bg-accent p-5 text-on-accent">
-      <span className="inline-block rounded-md bg-bg px-2.5 py-1 font-mono text-[11px] uppercase tracking-label text-fg">Coming to iPhone</span>
-      <h2 id="iphone-h" className="headline mt-3 text-[30px] font-black leading-[0.95]">Your account carries over</h2>
-      <p className="mt-3 text-[15px] leading-[1.55] text-on-accent-soft">
+    <section aria-labelledby="iphone-h" className="mt-10 rounded-card border border-line-strong bg-surface p-6">
+      <span className="inline-block rounded-full border border-white/[0.12] bg-surface-2 px-3 py-1 font-mono text-[10.5px] uppercase tracking-label-tight text-soft">Coming to iPhone</span>
+      <h2 id="iphone-h" className="headline mt-4 text-[22px] leading-[1.02]">Your account <span className="text-accent">carries over</span></h2>
+      <p className="mt-3 text-[15px] leading-[1.55] text-muted">
         We&rsquo;ll email your invite. On iPhone you will be able to swap an exercise when the bench is taken, and your plan will adjust to what you actually lifted.
       </p>
     </section>

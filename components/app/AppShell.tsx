@@ -27,8 +27,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   key={n.href}
                   href={n.href}
                   aria-current={active ? "page" : undefined}
-                  className={`rounded-lg px-3 py-2 font-mono text-xs uppercase tracking-label-tight ${active ? "bg-surface-2 text-fg" : "text-muted hover:text-fg"}`}
+                  className={`flex items-center gap-2 rounded-full px-3.5 py-2 font-mono text-xs uppercase tracking-label-tight ${active ? "bg-surface-2 text-fg" : "text-muted hover:text-fg"}`}
                 >
+                  {active && <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-now" />}
                   {n.label}
                 </Link>
               );

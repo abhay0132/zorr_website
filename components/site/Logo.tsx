@@ -1,8 +1,4 @@
-// The "zorr." wordmark used in the nav and the 404 page.
+// The "ZORR" wordmark, set like the app's logo: Archivo Expanded, extra bold, caps.
 export default function Logo({ className = "" }: { className?: string }) {
-  return (
-    <span className={`font-display font-black tracking-[-0.02em] ${className}`} style={{ fontStretch: "80%" }}>
-      zorr<span className="text-accent">.</span>
-    </span>
-  );
+  return <span className={`headline tracking-[0.01em] ${className}`}>Zorr</span>;
 }

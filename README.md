@@ -44,7 +44,8 @@ Don't run `build` while `dev` is running: they share `.next`.
 
 ```
 app/                      routes (App Router); the (groups) do not appear in URLs
-├── (marketing)/          /  /terms  /privacy  /support
+├── (marketing)/          /  /about  /pricing  /blog  /blog/[slug]  /contact
+│                         /terms  /privacy  /support
 ├── (auth)/               /signup  /login  /forgot-password
 ├── (app)/                /onboarding  /plan  /account   (signed in, noindex)
 ├── layout.tsx            fonts, metadata, theme colour
@@ -54,7 +55,8 @@ app/                      routes (App Router); the (groups) do not appear in URL
 ├── icon.svg              favicon
 ├── robots.ts, sitemap.ts
 components/
-├── site/                 shared chrome: Nav, Footer, Logo, icons, VideoSlot
+├── site/                 shared chrome: Nav (with phone menu), Footer, Logo, Knob button,
+│                         IronPlate, PageShell, PostCover, ContactForm, icons, VideoSlot
 ├── landing/              one file per landing section, plus its interactive bits
 ├── legal/                LegalPage layout, Callout, Ph (visible placeholders)
 └── app/                  web app: shells, forms, OnboardingFlow, PlanView, AccountView,
@@ -64,6 +66,7 @@ lib/
 ├── onboarding.ts         questions, options and the answers → profile mapping
 ├── site.ts               URLs, support email, sign-up path
 ├── faq.ts                FAQ shared by the landing page and /support
+├── blog.ts               blog posts as plain data (no CMS)
 └── legal.ts              every legal placeholder in one place
 docs/                     see docs/README.md
 tailwind.config.ts        the whole colour palette (stock Tailwind colours removed)
@@ -85,3 +88,6 @@ Work is tracked in `docs/tracking/`. The cross-repo, file-by-file record lives i
 monorepo at `docs/web/CHANGELOG.md`.
 
 - **Legal pages:** drafts awaiting lawyer review. Placeholders are in `lib/legal.ts`.
+- **Design:** matches the iPhone app's Plates look; tokens in `tailwind.config.ts`.
+- **Pricing:** the iPhone price is a visible `[PRICE]` placeholder in `app/(marketing)/pricing/page.tsx`.
+- **Blog:** two launch posts in `lib/blog.ts` need the founder's review.

@@ -94,7 +94,7 @@ export default function AccountView() {
     <div className="flex flex-col gap-10">
       <div>
         <p className="label text-accent">Account</p>
-        <h1 className="headline mt-2 text-[clamp(34px,9vw,52px)] leading-[0.95]">{profile.name}</h1>
+        <h1 className="headline mt-2 text-[clamp(24px,7vw,34px)] leading-[1.02]">{profile.name}</h1>
         <p className="mt-2 text-[15px] text-muted">{profile.email}</p>
       </div>
 
@@ -132,15 +132,15 @@ export default function AccountView() {
         </p>
         {!confirmOpen ? (
           <div className="mt-4">
-            <Button variant="secondary" onClick={() => setConfirmOpen(true)} className="!border-accent !text-accent">Delete my account</Button>
+            <Button variant="secondary" onClick={() => setConfirmOpen(true)} className="!border-danger !text-danger">Delete my account</Button>
           </div>
         ) : (
-          <form onSubmit={deleteAccount} className="mt-5 flex flex-col gap-4 rounded-2xl border border-accent bg-accent/5 p-5">
+          <form onSubmit={deleteAccount} className="mt-5 flex flex-col gap-4 rounded-2xl border border-danger bg-danger/5 p-5">
             {deleteError && <Notice>{deleteError}</Notice>}
             <TextField label="Your password" type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} required />
             <TextField label={`Type ${CONFIRM_PHRASE} to confirm`} autoComplete="off" autoCapitalize="characters" value={phrase} onChange={(e) => setPhrase(e.target.value)} required />
             <div className="flex flex-wrap gap-3">
-              <Button type="submit" loading={deleting} disabled={!password || phrase !== CONFIRM_PHRASE}>Delete permanently</Button>
+              <Button type="submit" variant="danger" loading={deleting} disabled={!password || phrase !== CONFIRM_PHRASE}>Delete permanently</Button>
               <Button type="button" variant="ghost" onClick={() => { setConfirmOpen(false); setPassword(""); setPhrase(""); }}>Cancel</Button>
             </div>
           </form>
