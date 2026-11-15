@@ -470,7 +470,7 @@ export default function OnboardingFlow() {
             if (step.valid(answers)) next();
           }}
         >
-          <h1 ref={headingRef} tabIndex={-1} className="headline text-[clamp(36px,10vw,52px)] leading-[0.95] focus:outline-none">
+          <h1 ref={headingRef} tabIndex={-1} className="headline text-[clamp(26px,7.4vw,36px)] leading-[1.02] focus:outline-none">
             {step.title}
           </h1>
           {step.helper && <p className="mt-3 text-[16px] leading-[1.55] text-muted">{step.helper}</p>}
@@ -483,7 +483,7 @@ export default function OnboardingFlow() {
         </form>
       ) : (
         <div className="mt-8">
-          <h1 ref={headingRef} tabIndex={-1} className="headline text-[clamp(36px,10vw,52px)] leading-[0.95] focus:outline-none">
+          <h1 ref={headingRef} tabIndex={-1} className="headline text-[clamp(26px,7.4vw,36px)] leading-[1.02] focus:outline-none">
             Before we <span className="text-accent">build it</span>
           </h1>
           {error && <div className="mt-5"><Notice>{error}</Notice></div>}
@@ -498,11 +498,11 @@ export default function OnboardingFlow() {
           </div>
           <div className="mt-5 flex flex-col gap-4">
             <label className="flex cursor-pointer items-start gap-3 text-[15px] leading-[1.5] text-soft">
-              <input type="checkbox" checked={disclaimer} onChange={(e) => setDisclaimer(e.target.checked)} className="mt-1 h-5 w-5 shrink-0 accent-[#FF5C1F]" />
+              <input type="checkbox" checked={disclaimer} onChange={(e) => setDisclaimer(e.target.checked)} className="mt-1 h-5 w-5 shrink-0 accent-[#EDEBE6]" />
               <span>I understand this, and I train at my own risk.</span>
             </label>
             <label className="flex cursor-pointer items-start gap-3 text-[15px] leading-[1.5] text-soft">
-              <input type="checkbox" checked={aiConsent} onChange={(e) => setAiConsent(e.target.checked)} className="mt-1 h-5 w-5 shrink-0 accent-[#FF5C1F]" />
+              <input type="checkbox" checked={aiConsent} onChange={(e) => setAiConsent(e.target.checked)} className="mt-1 h-5 w-5 shrink-0 accent-[#EDEBE6]" />
               <span>
                 I agree to my answers ({SENT_TO_AI}) being sent to a third-party AI model, Google&rsquo;s Gemini, to write my plan. My name, email
                 and password are never sent.{" "}
@@ -526,7 +526,7 @@ function Centered({ title, children }: { title: React.ReactNode; children: React
   useEffect(() => ref.current?.focus(), []);
   return (
     <div className="pt-6">
-      <h1 ref={ref} tabIndex={-1} className="headline text-[clamp(36px,10vw,52px)] leading-[0.95] focus:outline-none">{title}</h1>
+      <h1 ref={ref} tabIndex={-1} className="headline text-[clamp(26px,7.4vw,36px)] leading-[1.02] focus:outline-none">{title}</h1>
       <div className="mt-6 flex flex-col gap-5 text-[16px] leading-[1.6] text-muted">{children}</div>
     </div>
   );
@@ -544,10 +544,10 @@ function Generating({ startedAt }: { startedAt: number }) {
   }, [startedAt]);
   return (
     <div className="pt-6" aria-busy="true">
-      <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-label text-accent">
+      <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-label text-now">
         <Spinner /> Building your plan
       </div>
-      <h1 className="headline mt-5 text-[clamp(36px,10vw,52px)] leading-[0.95]">This takes up to a minute</h1>
+      <h1 className="headline mt-5 text-[clamp(26px,7.4vw,36px)] leading-[1.02]">This takes up to a minute</h1>
       <p className="mt-4 text-[16px] leading-[1.6] text-muted">Keep this page open. Here is what happens in that time:</p>
       <div className="legal !text-[16px]">
         <ul>

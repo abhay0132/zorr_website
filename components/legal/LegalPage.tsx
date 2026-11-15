@@ -23,20 +23,20 @@ export default function LegalPage({ label, title, lastUpdated, draft, callout, i
   return (
     <div className="overflow-x-clip">
       <Nav />
-      <main className="mx-auto max-w-page px-4 pb-24 pt-16 sm:px-6 md:pb-32 md:pt-24">
+      <main className="mx-auto max-w-page px-4 pb-4 pt-16 sm:px-6 md:px-10 md:pb-8 md:pt-24">
         {draft && (
           // A real HTML comment in the served page, so it survives into view-source.
           <div hidden dangerouslySetInnerHTML={{ __html: "<!-- DRAFT: needs review by a lawyer -->" }} />
         )}
 
-        <p className="label text-accent">{label}</p>
-        <h1 className="headline mt-4 text-[clamp(48px,8vw,112px)] font-black leading-[0.88]">{title}</h1>
+        <p className="label text-dim">{label}</p>
+        <h1 className="headline mt-4 text-[clamp(32px,5.4vw,64px)] leading-[0.98]">{title}</h1>
         <p className="mt-5 font-mono text-xs uppercase tracking-label-tight text-muted">
           Last updated <time>{lastUpdated}</time>
         </p>
 
         {draft && (
-          <div role="note" className="mt-8 max-w-[760px] rounded-xl border border-accent bg-accent/5 px-5 py-4 text-[15px] leading-[1.6] text-soft">
+          <div role="note" className="mt-8 max-w-[760px] rounded-2xl border border-line-strong bg-surface px-5 py-4 text-[15px] leading-[1.6] text-soft">
             <strong className="font-semibold text-fg">Draft.</strong> This text has not been reviewed by a lawyer yet. It will be
             before launch, and it may change when it is.
           </div>
@@ -67,8 +67,8 @@ export default function LegalPage({ label, title, lastUpdated, draft, callout, i
             {intro && <div className="mb-12">{intro}</div>}
             {sections.map((s, i) => (
               <section key={s.id} id={s.id} aria-labelledby={`${s.id}-h`} className="border-t border-line pb-4 pt-10 first:border-t-0 first:pt-0">
-                <h2 id={`${s.id}-h`} className="headline flex gap-4 text-[clamp(28px,3.4vw,40px)] leading-[0.95]">
-                  <span aria-hidden="true" className="pt-1.5 font-mono text-sm font-normal normal-case text-accent" style={{ fontStretch: "100%" }}>
+                <h2 id={`${s.id}-h`} className="headline flex gap-4 text-[clamp(20px,2.4vw,26px)] leading-[1.05]">
+                  <span aria-hidden="true" className="pt-1 font-mono text-sm font-normal normal-case text-dim" style={{ fontStretch: "100%" }}>
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <span>{s.title}</span>

@@ -13,7 +13,7 @@ export default function AuthShell({ title, intro, children }: { title: React.Rea
         </div>
       </header>
       <main className="mx-auto w-full max-w-[440px] px-4 pb-20 pt-10 sm:pt-16">
-        <h1 className="headline text-[clamp(40px,11vw,60px)] leading-[0.92]">{title}</h1>
+        <h1 className="headline text-[clamp(28px,8vw,40px)] leading-[1.02]">{title}</h1>
         {intro && <div className="mt-4 text-[16px] leading-[1.55] text-muted">{intro}</div>}
         <div className="mt-8">{children}</div>
       </main>

@@ -1,22 +1,21 @@
-import Nav from "@/components/site/Nav";
-import Hero from "@/components/landing/Hero";
-import SpecStrip from "@/components/landing/SpecStrip";
-import TemplateVsPlan from "@/components/landing/TemplateVsPlan";
-import Ticker from "@/components/landing/Ticker";
-import FeatureBento from "@/components/landing/FeatureBento";
-import HowItWorks from "@/components/landing/HowItWorks";
-import AppTeaser from "@/components/landing/AppTeaser";
-import Personas from "@/components/landing/Personas";
-import Faq from "@/components/landing/Faq";
-import FinalCta from "@/components/landing/FinalCta";
-import Footer from "@/components/site/Footer";
-import DeletedNotice from "@/components/landing/DeletedNotice";
 import { Suspense } from "react";
+import Nav from "@/components/site/Nav";
+import Footer from "@/components/site/Footer";
+import Hero from "@/components/landing/Hero";
+import FortnightRing from "@/components/landing/FortnightRing";
+import HowItWorks from "@/components/landing/HowItWorks";
+import ChalkBand from "@/components/landing/ChalkBand";
+import OnePlan from "@/components/landing/OnePlan";
+import Barbell from "@/components/landing/Barbell";
+import Compare from "@/components/landing/Compare";
+import Availability from "@/components/landing/Availability";
+import Faq from "@/components/landing/Faq";
+import DeletedNotice from "@/components/landing/DeletedNotice";
 
 export default function HomePage() {
   return (
-    // overflow-x-clip (not hidden) keeps the tilted phones from widening the page
-    // without turning this wrapper into a scroll container, so the sticky nav still sticks.
+    // overflow-x-clip (not hidden) keeps the cropped plate and tilted phones from
+    // widening the page without making this a scroll container, so sticky still works.
     <div className="overflow-x-clip">
       <Nav />
       <Suspense>
@@ -24,15 +23,14 @@ export default function HomePage() {
       </Suspense>
       <main>
         <Hero />
-        <SpecStrip />
-        <TemplateVsPlan />
-        <Ticker />
-        <FeatureBento />
+        <FortnightRing />
         <HowItWorks />
-        <AppTeaser />
-        <Personas />
+        <ChalkBand />
+        <OnePlan />
+        <Barbell />
+        <Compare />
+        <Availability />
         <Faq />
-        <FinalCta />
       </main>
       <Footer />
     </div>

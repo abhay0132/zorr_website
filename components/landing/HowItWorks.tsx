@@ -1,78 +1,113 @@
 import { Check } from "@/components/site/icons";
 
-function Step({ when, title, children, caption }: { when: string; title: string; children: React.ReactNode; caption: string }) {
+// Three steps, each shown with a piece of the real web app drawn in the app's style.
+
+const KIT = [
+  { name: "Dumbbells", on: true },
+  { name: "Barbell", on: false },
+  { name: "Kettlebell", on: false },
+  { name: "Bands", on: false },
+  { name: "Pull-up bar", on: false },
+  { name: "Bench", on: true },
+];
+
+const ROWS = [
+  { n: "01", name: "Dumbbell bench press", muscle: "Chest", rx: "3×10" },
+  { n: "02", name: "One-arm row", muscle: "Back", rx: "3×12" },
+  { n: "03", name: "Plank", muscle: "Core", rx: "3×30s" },
+];
+
+function Card({ children }: { children: React.ReactNode }) {
   return (
-    <li className="flex flex-col gap-[22px]">
-      <div className="flex items-center gap-3">
-        <span aria-hidden="true" className="h-3 w-3 rounded-[3px] bg-accent" />
-        <span className="label text-soft">{when}</span>
-        <span aria-hidden="true" className="h-px flex-1 bg-line-strong" />
-      </div>
-      <h3 className="headline m-0 text-[30px] leading-none">{title}</h3>
-      <div aria-hidden="true" className="flex flex-col rounded-[18px] border border-line bg-surface p-5">
-        {children}
-      </div>
-      <p className="m-0 text-[15px] leading-[1.6] text-muted">{caption}</p>
+    <div aria-hidden="true" className="flex h-[380px] flex-col justify-center rounded-card border border-white/[0.08] bg-surface p-7">
+      {children}
+    </div>
+  );
+}
+
+function Step({ n, title, body, children }: { n: string; title: string; body: string; children: React.ReactNode }) {
+  return (
+    <li>
+      <Card>{children}</Card>
+      <p className="mt-6 font-mono text-[11px] tracking-label-tight text-dim">{n}</p>
+      <h3 className="mt-2 text-xl font-bold tracking-[-0.01em]">{title}</h3>
+      <p className="mt-2 text-[15px] leading-[1.55] text-muted">{body}</p>
     </li>
   );
 }
 
-// Three-stop timeline: answer, get two weeks, train and tick.
 export default function HowItWorks() {
   return (
-    <section id="how" aria-labelledby="how-heading" className="mx-auto max-w-page px-4 pt-24 sm:px-6 md:pt-[150px]">
-      <p className="label text-accent">How it works</p>
-      <h2 id="how-heading" className="headline mt-3.5 max-w-[760px] text-[clamp(42px,5.6vw,80px)] leading-[0.92]">
-        Sign-up to first set in two minutes
+    <section id="how" aria-labelledby="how-heading" className="mx-auto max-w-page px-4 py-24 sm:px-6 md:px-10 md:py-[140px]">
+      <p className="label text-center text-dim">How it works · 3 steps</p>
+      <h2 id="how-heading" className="headline mt-3.5 text-center text-[clamp(28px,4vw,48px)] leading-none">
+        Three steps. <span className="text-accent">Five minutes.</span>
       </h2>
 
-      <ol className="mt-16 grid grid-cols-[repeat(auto-fit,minmax(min(100%,320px),1fr))] gap-x-6 gap-y-10">
-        <Step when="Minute 0" title="Answer honestly" caption="Goal, experience, equipment, how many days you can train, and anything that hurts.">
-          <div className="flex flex-col gap-2.5">
-            <div className="h-1 rounded-full bg-control-2">
-              <div className="h-1 w-3/5 rounded-full bg-accent" />
-            </div>
-            <div className="mt-1.5 text-base font-medium">Anything that hurts right now?</div>
-            <div className="rounded-[10px] bg-surface-2 px-3 py-2.5 text-[13px] text-soft">Nothing, I&rsquo;m good</div>
-            <div className="rounded-[10px] bg-accent px-3 py-2.5 text-[13px] font-semibold text-on-accent">Lower back, a little</div>
-            <div className="rounded-[10px] bg-surface-2 px-3 py-2.5 text-[13px] text-soft">Knee</div>
+      <ol className="mt-14 grid gap-5 md:grid-cols-3">
+        <Step n="01" title="Answer a few questions" body="Goal, experience, equipment, how many days you can train, and anything that hurts.">
+          <p className="label text-dim">How you train</p>
+          <p className="headline mb-[18px] mt-2 text-[22px] leading-none text-dim">
+            What&rsquo;s in <span className="text-fg">your kit?</span>
+          </p>
+          <div className="grid grid-cols-3 gap-2">
+            {KIT.map((k) => (
+              <span
+                key={k.name}
+                className={`relative flex h-[72px] items-end rounded-[14px] p-2.5 text-xs ${k.on ? "border-[1.5px] border-accent bg-surface-2 font-semibold" : "border border-white/[0.08] bg-surface-2 text-muted"}`}
+              >
+                {k.name}
+                {k.on && (
+                  <span className="absolute right-[7px] top-[7px] flex h-4 w-4 items-center justify-center rounded-full bg-accent text-ink">
+                    <Check size={10} strokeWidth={3.5} />
+                  </span>
+                )}
+              </span>
+            ))}
           </div>
         </Step>
 
-        <Step when="Minute 2" title="Get two weeks" caption="A plan that fits your week and works around what hurts. Open it on any phone at the gym.">
-          <div className="pb-2.5 font-mono text-[11px] tracking-label-tight text-muted">3 DAYS A WEEK · DUMBBELLS</div>
-          {[
-            ["Mon · Lower body A", "5 moves"],
-            ["Wed · Upper body A", "5 moves"],
-            ["Fri · Full body", "6 moves"],
-          ].map(([day, moves]) => (
-            <div key={day} className="flex justify-between border-t border-line-soft py-[11px] text-sm">
-              <span>{day}</span>
-              <span className="text-muted">{moves}</span>
+        <Step n="02" title="Get your two weeks" body="A plan that fits your week and works around what hurts. Open it on any phone at the gym.">
+          <div className="mb-4 flex items-center gap-3.5">
+            <span className="h-11 w-11 shrink-0 rounded-full" style={{ background: "radial-gradient(circle, #0F1011 0 22%, #2a1210 23% 30%, #D8443A 31% 100%)" }} />
+            <div>
+              <p className="label text-now">Today · session 1</p>
+              <p className="headline mt-1 text-[22px] leading-[1.05]">Upper A</p>
+            </div>
+          </div>
+          {ROWS.map((r) => (
+            <div key={r.n} className="flex items-center gap-3 border-t border-white/[0.08] py-3">
+              <span className="font-mono text-[11px] text-dim">{r.n}</span>
+              <span className="flex-grow">
+                <span className="block text-[15px] font-semibold">{r.name}</span>
+                <span className="block text-xs text-dim">{r.muscle}</span>
+              </span>
+              <span className="font-mono text-[13px] font-semibold">{r.rx}</span>
             </div>
           ))}
-          <div className="border-t border-line-soft pt-2.5 text-xs text-accent">Back-friendly picks applied</div>
         </Step>
 
-        <Step when="Day 1 onward" title="Train, tick, repeat" caption="Mark each workout done and tell us how it felt. Two weeks, ticked off one day at a time.">
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-on-accent">
-                <Check size={18} strokeWidth={2.8} />
-              </span>
-              <div>
-                <div className="text-base font-medium">Day 2 done</div>
-                <div className="text-xs text-muted">2 of 6 this fortnight</div>
-              </div>
-            </div>
-            <div className="mt-1 text-[13px] text-soft">How did that feel?</div>
-            <div className="flex gap-1.5">
-              {["Easy", "Right", "Hard"].map((f) => (
-                <span key={f} className={`flex-1 rounded-lg bg-surface-2 py-[9px] text-center text-[13px] ${f === "Right" ? "outline outline-1 outline-accent" : ""}`}>
-                  {f}
-                </span>
-              ))}
-            </div>
+        <Step n="03" title="Tick it off" body="Mark each workout done and tell us how it felt. Two weeks, ticked off one day at a time.">
+          <div className="flex flex-col gap-4">
+            <span className="flex h-[50px] items-center justify-between rounded-full bg-accent pl-5 pr-[5px] text-[15px] font-semibold text-ink">
+              Day 1 done
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-surface text-fg"><Check size={14} /></span>
+            </span>
+            <p className="label text-center text-dim">How did that feel?</p>
+            <span className="grid grid-cols-3 gap-1 rounded-full bg-surface-2 p-1 text-center text-sm">
+              <span className="rounded-full py-2.5 text-muted">Easy</span>
+              <span className="rounded-full bg-accent py-2.5 font-semibold text-ink">Right</span>
+              <span className="rounded-full py-2.5 text-muted">Hard</span>
+            </span>
+            <span className="mt-1 flex items-center justify-between px-1.5">
+              <span className="h-[22px] w-[22px] rounded-full bg-plate-red" />
+              <span className="h-1 w-1 rounded-full bg-control-3" />
+              <span className="h-[22px] w-[22px] rounded-full border-2 border-now" />
+              <span className="h-1 w-1 rounded-full bg-control-3" />
+              <span className="h-[22px] w-[22px] rounded-full border-2 border-line-strong" />
+              <span className="h-1 w-1 rounded-full bg-control-3" />
+              <span className="h-1 w-1 rounded-full bg-control-3" />
+            </span>
           </div>
         </Step>
       </ol>

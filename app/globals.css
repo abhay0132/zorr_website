@@ -28,35 +28,61 @@
     border-radius: 4px;
   }
 
-  /* Sticky nav must not hide the heading an in-page link jumps to. */
+  /* The floating nav must not hide the heading an in-page link jumps to. */
   [id] {
-    scroll-margin-top: 80px;
+    scroll-margin-top: 96px;
   }
 }
 
 @layer components {
-  /* Condensed uppercase headline. font-stretch needs the variable Archivo wdth axis. */
+  /* The app's headline: Archivo Expanded (wdth 125), extra bold, uppercase.
+     font-stretch needs the variable Archivo wdth axis loaded in layout.tsx. */
   .headline {
-    @apply font-display font-heavy uppercase;
-    font-stretch: 72%;
+    @apply font-display font-extrabold uppercase tracking-[-0.01em];
+    font-stretch: 125%;
+  }
+
+  /* The app's tonal headline: the setup words in dim, the key words in chalk.
+     Markup marks the key words with text-accent; the rest of the line dims. */
+  .headline:has(> .text-accent) {
+    color: theme("colors.dim");
+  }
+
+  /* Big numbers and exercise names: Archivo Condensed (wdth 75). */
+  .numeral {
+    @apply font-display font-extrabold;
+    font-stretch: 75%;
   }
 
   /* Section and card label in mono caps. */
   .label {
-    @apply font-mono text-xs uppercase tracking-label;
+    @apply font-mono text-[11px] font-medium uppercase tracking-label;
   }
 
-  /* Primary CTA: accent fill, 10 to 12px radius, never a pill. */
+  /* Primary CTA without the knob: a chalk pill. Prefer <KnobLink> for main actions. */
   .btn-accent {
-    @apply inline-flex items-center justify-center gap-2.5 rounded-xl bg-accent font-semibold text-on-accent transition-[filter] hover:brightness-110;
+    @apply inline-flex items-center justify-center gap-2.5 rounded-full bg-accent font-semibold text-on-accent transition-[filter] hover:brightness-95;
   }
 
   .link {
     @apply text-soft transition-colors hover:text-white;
   }
 
+  /* Corner ticks around a small label box, as on the landing ring's answer tags. */
+  .corners {
+    background:
+      linear-gradient(theme("colors.dim"), theme("colors.dim")) top left / 8px 1px no-repeat,
+      linear-gradient(theme("colors.dim"), theme("colors.dim")) top left / 1px 8px no-repeat,
+      linear-gradient(theme("colors.dim"), theme("colors.dim")) top right / 8px 1px no-repeat,
+      linear-gradient(theme("colors.dim"), theme("colors.dim")) top right / 1px 8px no-repeat,
+      linear-gradient(theme("colors.dim"), theme("colors.dim")) bottom left / 8px 1px no-repeat,
+      linear-gradient(theme("colors.dim"), theme("colors.dim")) bottom left / 1px 8px no-repeat,
+      linear-gradient(theme("colors.dim"), theme("colors.dim")) bottom right / 8px 1px no-repeat,
+      linear-gradient(theme("colors.dim"), theme("colors.dim")) bottom right / 1px 8px no-repeat;
+  }
+
   /* Long-form text on Terms, Privacy and Support: 17px, generous leading, ~68ch lines,
-     body in the softer off-white (12:1 on the background) rather than the muted grey. */
+     body in the softer chalk rather than the muted grey. */
   .legal {
     @apply text-[17px] leading-[1.7] text-soft;
   }
@@ -77,10 +103,10 @@
   }
   .legal ul > li::before {
     content: "";
-    @apply absolute left-0 top-[0.72em] h-1.5 w-1.5 rounded-[2px] bg-accent;
+    @apply absolute left-0 top-[0.62em] h-2 w-2 rounded-full border-[1.5px] border-dim;
   }
   .legal ol {
-    @apply list-decimal pl-6 marker:font-mono marker:text-sm marker:text-accent;
+    @apply list-decimal pl-6 marker:font-mono marker:text-sm marker:text-dim;
   }
   .legal ol > li {
     @apply mt-2 pl-1;
@@ -89,11 +115,11 @@
     @apply font-semibold text-fg;
   }
   .legal a {
-    @apply text-fg underline decoration-accent decoration-1 underline-offset-[3px] transition-colors hover:text-accent;
+    @apply text-fg underline decoration-control-3 decoration-1 underline-offset-[3px] transition-colors hover:decoration-fg;
   }
 }
 
-/* The ticker and every transition stop for people who ask for less motion. */
+/* Every transition and the ring's scroll steps stop for people who ask for less motion. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

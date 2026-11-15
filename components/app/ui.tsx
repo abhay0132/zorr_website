@@ -1,26 +1,48 @@
 "use client";
 
-// Small form and layout primitives for the logged-in web app. Same tokens as the
-// landing page; sized for thumbs at the gym (44px+ targets, 16px inputs so iOS
+// Small form and layout primitives for the logged-in web app, in the iPhone app's
+// "Plates" style. Sized for thumbs at the gym (44px+ targets, 16px inputs so iOS
 // Safari does not zoom on focus).
 
 import { forwardRef, useId } from "react";
+import { Chevron } from "@/components/site/icons";
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "secondary" | "ghost";
+  variant?: "primary" | "secondary" | "ghost" | "danger";
   loading?: boolean;
   full?: boolean;
+  /** The icon in the primary button's knob. Defaults to a chevron. */
+  icon?: React.ReactNode;
 };
 
-export function Button({ variant = "primary", loading, full, className = "", children, disabled, ...rest }: ButtonProps) {
-  const base = "inline-flex min-h-[52px] items-center justify-center gap-2 rounded-xl px-6 text-base font-semibold transition-[filter,background-color,border-color] disabled:cursor-not-allowed disabled:opacity-50";
+/**
+ * Primary is the app's knob button: a chalk pill whose right end is a small dark
+ * plate holding the icon (or the spinner while loading). The others stay centred and quiet.
+ */
+export function Button({ variant = "primary", loading, full, icon, className = "", children, disabled, ...rest }: ButtonProps) {
+  const common = "min-h-[52px] rounded-full text-base font-semibold transition-[filter,background-color,border-color] disabled:cursor-not-allowed disabled:opacity-50";
+  if (variant === "primary") {
+    return (
+      <button
+        {...rest}
+        disabled={disabled || loading}
+        aria-busy={loading || undefined}
+        className={`${common} inline-flex items-center justify-between gap-6 bg-accent py-[5px] pl-6 pr-[5px] text-on-accent hover:brightness-95 ${full ? "w-full" : ""} ${className}`}
+      >
+        <span>{children}</span>
+        <span aria-hidden="true" className="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-full bg-surface text-fg">
+          {loading ? <Spinner /> : (icon ?? <Chevron size={15} />)}
+        </span>
+      </button>
+    );
+  }
   const styles = {
-    primary: "bg-accent text-on-accent hover:brightness-110",
     secondary: "border border-control bg-surface-2 text-fg hover:border-control-3",
+    danger: "bg-danger text-ink hover:brightness-95",
     ghost: "text-soft underline decoration-control-3 underline-offset-4 hover:text-white",
   }[variant];
   return (
-    <button {...rest} disabled={disabled || loading} aria-busy={loading || undefined} className={`${base} ${styles} ${full ? "w-full" : ""} ${className}`}>
+    <button {...rest} disabled={disabled || loading} aria-busy={loading || undefined} className={`${common} inline-flex items-center justify-center gap-2 px-6 ${styles} ${full ? "w-full" : ""} ${className}`}>
       {loading && <Spinner />}
       {children}
     </button>
@@ -42,7 +64,7 @@ export const TextField = forwardRef<HTMLInputElement, FieldProps>(function TextF
       <label htmlFor={inputId} className="mb-2 block font-mono text-[11px] uppercase tracking-label text-muted">
         {label}
       </label>
-      <div className={`flex items-center rounded-xl border bg-surface-3 ${error ? "border-accent" : "border-control focus-within:border-soft"}`}>
+      <div className={`flex items-center rounded-xl border bg-surface-3 ${error ? "border-danger" : "border-control focus-within:border-soft"}`}>
         <input
           ref={ref}
           id={inputId}
@@ -54,7 +76,7 @@ export const TextField = forwardRef<HTMLInputElement, FieldProps>(function TextF
         {unit && <span className="pr-4 font-mono text-sm text-muted">{unit}</span>}
       </div>
       {hint && !error && <p id={`${inputId}-hint`} className="mt-2 text-[13px] text-muted">{hint}</p>}
-      {error && <p id={`${inputId}-err`} className="mt-2 text-[13px] text-accent">{error}</p>}
+      {error && <p id={`${inputId}-err`} className="mt-2 text-[13px] text-danger">{error}</p>}
     </div>
   );
 });
@@ -73,7 +95,7 @@ export function ChoiceCard({ selected, title, description, onSelect, name }: { s
         <span className="block text-base font-medium text-fg">{title}</span>
         {description && <span className="mt-0.5 block text-[13px] text-muted">{description}</span>}
       </span>
-      <span aria-hidden="true" className={`h-5 w-5 shrink-0 rounded-full border-2 ${selected ? "border-accent bg-accent shadow-[inset_0_0_0_3px_#0C0B0A]" : "border-control-3"}`} />
+      <span aria-hidden="true" className={`h-5 w-5 shrink-0 rounded-full border-2 ${selected ? "border-accent bg-accent shadow-[inset_0_0_0_3px_#0F1011]" : "border-control-3"}`} />
     </label>
   );
 }
@@ -97,7 +119,7 @@ export function Chip({ pressed, onToggle, children }: { pressed: boolean; onTogg
 
 export function Notice({ tone = "error", children }: { tone?: "error" | "info"; children: React.ReactNode }) {
   return (
-    <div role={tone === "error" ? "alert" : "status"} className={`rounded-xl border px-4 py-3 text-[15px] leading-[1.5] ${tone === "error" ? "border-accent bg-accent/10 text-fg" : "border-line-strong bg-surface text-soft"}`}>
+    <div role={tone === "error" ? "alert" : "status"} className={`rounded-xl border px-4 py-3 text-[15px] leading-[1.5] ${tone === "error" ? "border-danger bg-danger/10 text-fg" : "border-line-strong bg-surface text-soft"}`}>
       {children}
     </div>
   );

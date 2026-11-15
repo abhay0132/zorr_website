@@ -167,3 +167,56 @@ Folders reorganised with no URL change: route groups `app/(marketing|auth|app)`,
 untracked (machine-specific), `lint` script replaced by `typecheck`, README rewritten with a
 folder map, `docs/README.md` added. Same 17 static routes after the move. Pushed to
 https://github.com/abhay0132/zorr_website (`main`).
+
+---
+
+## 2026-11-15 — Website matched to the app's Plates design
+
+The founder wanted the website and the iPhone app to share one look. Source of truth:
+`Zorr_Final/zorr_frontend/design-v2/theme/tokens.ts` (Plates, approved 2026-11-13). Layout ideas
+came from a nuehealth.in study (floating pill nav, centred scroll ring, calm cards); colours, type
+and buttons are the app's. Approved mockup: the "Landing page v2" artboard on the Zorr landing
+redesign canvas (claude.ai artifact, private).
+
+- **Tokens** (`tailwind.config.ts`): old names kept so every page restyled at once; values moved
+  to Plates. `accent` is now chalk (buttons, selections, focus). New: `now` (orange, only for
+  today/current/Kai), `danger` (errors, delete), `plate-*`, `chalk-band`, `ink`, `hub`.
+- **Type** (`app/layout.tsx`, `globals.css`): Archivo for everything (Geist dropped), Geist Mono
+  for labels. `.headline` is Archivo Expanded 125%, `.numeral` is Condensed 75%. A headline with
+  a `text-accent` span dims the rest of the line: the app's tonal headline.
+- **Shared**: `Knob.tsx` (the app's chalk pill with a dark disc), `IronPlate.tsx` (from the app's
+  welcome screen), floating `Nav`, new `Footer`, `Logo` is now "ZORR", favicon and share card
+  recoloured.
+- **Landing**: new sections `Hero`, `FortnightRing` (sticky 3-step scroll story above 860px with
+  motion allowed, static last step otherwise), `HowItWorks`, `ChalkBand`, `OnePlan`, `Barbell`,
+  `Compare`, `Availability`, `Faq`. Removed SpecStrip, TemplateVsPlan, Ticker, FeatureBento,
+  EquipmentDemo, AppTeaser, Personas, FinalCta.
+- **App pages**: primary `Button` is the knob; errors use `danger`; plan grid and day cards use
+  plate colours by session position (as the app does), orange rings today; Coming to iPhone card
+  is no longer orange; generating label is orange (happening now); active tab gets an orange dot.
+- **Legal and 404**: smaller expanded headlines, dim labels, chalk-outlined callout.
+
+Checked: typecheck, production build (17 static routes), landing at 1440 and 375 (no horizontal
+scroll, ring steps change on scroll, no console errors), /signup, /terms, 404, /plan shell.
+Not checked: signed-in pages with a live backend and real plan data.
+
+---
+
+## 2026-11-15 — About, Pricing, Blog and Contact pages
+
+Added on the founder's request, in the same Plates look.
+
+- `components/site/PageShell.tsx`: shared frame (nav, tonal page header, footer) and `SectionHead`.
+- `/about`: founder line (from the old site's footer), the three "why" lines (from the old
+  site's Problem section), four build rules, and a web-now / iPhone-next timeline.
+- `/pricing`: web ₹0 card (chalk outline, "Live now" in orange), iPhone card (1 month free, then
+  `[PRICE]` placeholder, future tense), trainer vs template vs Zorr strip, pricing questions.
+- `/contact`: four channels (email, grievance officer, Instagram, support) and a form that opens
+  a pre-filled draft in the visitor's mail app. Nothing is sent or stored by the site.
+- `/blog` and `/blog/[slug]`: posts as data in `lib/blog.ts`, static params, article metadata,
+  drawn covers in `PostCover.tsx`, a Kai line block, a sign-up card and "Keep reading".
+- Nav: Pricing and Blog on desktop; a `<details>` Menu on phones with all five pages. Footer:
+  Product, Company, Help groups. Sitemap: every page and post.
+
+Checked: typecheck, production build (23 routes, posts prerendered), every new page at 1440 and
+375 (no horizontal scroll), the phone menu opening.
